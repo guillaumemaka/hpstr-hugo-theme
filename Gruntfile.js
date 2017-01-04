@@ -8,17 +8,17 @@ module.exports = function(grunt) {
       },
       all: [
         'Gruntfile.js',
-        '!assets/js/*.js',
-        '!assets/js/plugins/*.js',
-        '!assets/js/scripts.min.js'
+        '!static/js/*.js',
+        '!static/js/plugins/*.js',
+        '!static/js/scripts.min.js'
       ]
     },
     uglify: {
       dist: {
         files: {
-          'assets/js/scripts.min.js': [
-            'assets/js/plugins/*.js',
-            'assets/js/_*.js'
+          'static/js/scripts.min.js': [
+            'static/js/plugins/*.js',
+            'static/js/_*.js'
           ]
         }
       }
@@ -31,19 +31,30 @@ module.exports = function(grunt) {
         },
         files: [{
           expand: true,
-          cwd: 'images/',
+          cwd: 'static/images/',
           src: '{,*/}*.{png,jpg,jpeg}',
-          dest: 'images/'
+          dest: 'static/images/'
         }]
+      }
+    },
+    sass: {
+      dist: {
+        options: {
+          style: 'compressed',
+          sourcemap: 'auto'
+        },
+        files: {
+          'static/css/main.css': 'static/css/main.scss'
+        }
       }
     },
     svgmin: {
       dist: {
         files: [{
           expand: true,
-          cwd: 'images/',
+          cwd: 'static/images/',
           src: '{,*/}*.svg',
-          dest: 'images/'
+          dest: 'static/images/'
         }]
       }
     },
@@ -56,8 +67,11 @@ module.exports = function(grunt) {
       }
     },
     clean: {
-      dist: [
-        'assets/js/scripts.min.js'
+      dist:  [
+        'static/js/scripts.min.js',
+        'static/css/main.css',
+        'static/css/main.css.map',
+        '**/.DS_Store'
       ]
     }
   });
@@ -68,14 +82,16 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-imagemin');
+  grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-svgmin');
 
   // Register tasks
   grunt.registerTask('default', [
     'clean',
     'uglify',
-    'imagemin',
-    'svgmin'
+    'sass',
+    // 'imagemin',
+    // 'svgmin'
   ]);
   grunt.registerTask('dev', [
     'watch'
