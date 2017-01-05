@@ -8,17 +8,17 @@ module.exports = function(grunt) {
       },
       all: [
         'Gruntfile.js',
-        '!static/js/*.js',
-        '!static/js/plugins/*.js',
-        '!static/js/scripts.min.js'
+        '!src/js/*.js',
+        '!src/js/plugins/*.js',
+        '!src/js/scripts.min.js'
       ]
     },
     uglify: {
       dist: {
         files: {
           'static/js/scripts.min.js': [
-            'static/js/plugins/*.js',
-            'static/js/_*.js'
+            'src/js/plugins/*.js',
+            'src/js/_*.js'
           ]
         }
       }
@@ -31,7 +31,7 @@ module.exports = function(grunt) {
         },
         files: [{
           expand: true,
-          cwd: 'static/images/',
+          cwd: 'src/images/',
           src: '{,*/}*.{png,jpg,jpeg}',
           dest: 'static/images/'
         }]
@@ -44,7 +44,7 @@ module.exports = function(grunt) {
           sourcemap: 'auto'
         },
         files: {
-          'static/css/main.css': 'static/css/main.scss'
+          'static/css/main.css': 'src/css/main.scss'
         }
       }
     },
@@ -52,7 +52,7 @@ module.exports = function(grunt) {
       dist: {
         files: [{
           expand: true,
-          cwd: 'static/images/',
+          cwd: 'src/images/',
           src: '{,*/}*.svg',
           dest: 'static/images/'
         }]
